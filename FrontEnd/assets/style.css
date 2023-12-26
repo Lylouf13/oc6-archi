@@ -58,6 +58,7 @@ header {
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 section {
 	margin: 50px 0
 }
@@ -123,7 +124,22 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+}
+.portfolio__title{
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 150px 0px 75px 0px;
+	gap: 20px;
+}
+.portfolio__title__modify{
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap:10px;
+	cursor: pointer;
 }
 .gallery {
 	width: 100%;
@@ -137,9 +153,47 @@ li:hover {
 	width: 100%;
 
 }
+.js-hidden{
+	display: none;
+}
+
+/* Filter Elements */
+.galleryFilter{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap:10px;
+	margin-bottom: 30px;
+}
+.galleryFilter__button{
+	border-radius: 50px;
+	border-style: solid;
+	border-width: 1px;
+	height: 37px;
+	min-width: 100px;
+	border-color: #1D6154;
+
+	font-family: 'Syne';
+	color:#1D6154;
+	transition: all, 0.5s;
+	cursor:pointer;
+}
+.galleryFilter__button:hover{
+	background-color: #80b1a8;
+	color: white;
+}
+
+.galleryFilter__button-js-selected{
+	background-color: #1D6154;
+	color: white;
+}
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
+}
+
+#contact.login{
+	width:35%
 }
 #contact > * {
 	text-align: center;
@@ -148,6 +202,9 @@ margin: auto;
 #contact h2{
 	margin-bottom: 20px;
 }
+#contact.login h2{
+    margin: 150px 0px 0px 0px;
+}
 #contact form {
 	text-align: left;
 	margin-top:30px;
@@ -155,13 +212,23 @@ margin: auto;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, 
+.modifier__panel__edit__form input,
+.modifier__panel__edit__form SELECT{
+	box-sizing: border-box;
 	height: 50px;
 	font-size: 1.2em;
+	appearance: none;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+
+#contact.login .button{
+	height: 35px;
+	font-size: 1.0em;
+}
+#contact label,
+.modifier__panel__edit__form label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -169,6 +236,240 @@ margin: auto;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+#contact a{
+	text-decoration: underline;
+	color: black;
+	align-self: center;
+	margin-bottom: 240px;
+}
+
+
+/* Modifier Panel */
+.modifier{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    margin: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.555);
+    transition: all 0.4s;
+}
+
+.modifier.-active{
+    opacity: 100;
+    z-index: 1;
+    pointer-events: all;
+}
+
+.modifier__panel{
+	background-color: white;
+    border-radius: 10px;
+    width: 630px;
+    height: 688px;
+}
+
+.modifier__panel__button{
+	border-radius: 50px;
+    border-style: solid;
+    border-width: 1px;
+    padding-top: 15px;
+    height: 30px;
+    min-width: 240px;
+    border-color: #1D6154;
+    background-color: #1D6154;
+	
+    font-family: 'Syne';
+    text-align: center;
+    color: white;
+
+    transition: all, 0.5s;
+    cursor: pointer;
+}
+
+.modifier__panel__button:hover{
+	background-color: #80b1a8;
+	color: white;
+}
+/* Modifier Panel - Sections */
+/* Content overview */
+.modifier__panel__content{
+	display:none
+}
+.modifier__panel__content.-active{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.modifier__panel h3{
+	font-size: 26px;
+	margin-top: 60px;
+	margin-bottom: 30px
+}
+.modifier__panel>i{
+    position: relative;
+    left: 550px;
+    top: 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.modifier__panel__content__elements{
+	display: grid;
+    box-sizing: border-box;
+    padding-bottom: 50px;
+    margin-bottom: 20px;
+    gap: 10px 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+    border-bottom: solid;
+    border-width: 1px;
+	
+}
+
+.modifier__panel__content__elements .iconContainer{
+	position: relative;
+    left: 50px;
+    bottom: 95px;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 9px;
+    background-color: black;
+    border-radius: 3px;
+	cursor:pointer
+}
+
+.modifier__panel__content__elements img{
+	width: 70px;
+	height: 100px;
+	object-fit: cover;
+}
+
+/* Add Project section */
+.modifier__panel__edit{
+	display: none;
+}
+
+.modifier__panel__edit.-active{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modifier__panel__edit>i{
+	position: relative;
+    right: 230px;
+    top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modifier__panel__edit__form{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+	width: 65%;
+}
+
+/* Image input main container*/
+.modifier__panel__edit__form__imageContainer{
+	box-sizing: border-box;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 170px;
+	border-radius: 3px;
+    background-color: #E8F1F6;
+
+}
+
+.modifier__panel__edit__form__imageContainer i{
+	font-size: 60px;
+	color: #CBD6DC;
+}
+.modifier__panel__edit__form__imageContainer label{
+    box-sizing: border-box;
+    background-color: #CBD6DC;
+	margin-top: 10px;
+    width: 170px;
+    height: 35px;
+    padding: 10px 0px 0px 0px;
+    border-radius: 50px;
+	color: #306685;
+	font-weight: bold;
+    text-align: center;
+	cursor: pointer;
+}
+.modifier__panel__edit__form__imageContainer input{
+	width: 0.1px;
+	height: 0.1px;
+	overflow: hidden;
+	opacity: 0;
+}
+
+/* Image input container -- No image sent */
+.modifier__panel__edit__form__imageContainer__input.-active{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.modifier__panel__edit__form__imageContainer__preview{
+	display: none;
+}
+
+/*Image input container -- Image sent */
+.modifier__panel__edit__form__imageContainer__input{
+	display: none;
+}
+.modifier__panel__edit__form__imageContainer__preview.-active{
+	display: block;
+	height: inherit;
+	cursor: pointer;
+}
+
+.modifier__panel__edit__form .modifier__panel__edit__form__button{
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	cursor: pointer;
+}
+.modifier__panel__edit__form .fieldMissing{
+	border:solid;
+	border-width: 2px;
+	border-color: red;
+}
+
+.modifier__panel__edit__form__button.nonFilled{
+	background-color: gray;
+	cursor:auto
+}
+
+.modifier__panel__edit__form__dropdown>select,
+.modifier__panel__edit__form__field{
+	box-sizing: border-box;
+	width: 100%;
+	padding-left: 20px;
+}
+
+.modifier__panel__edit__form__dropdown i{
+	position: relative;
+    left: 380px;
+    bottom: 30px;
+    pointer-events: none;
+}
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -185,4 +486,3 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
