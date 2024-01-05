@@ -47,6 +47,7 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -95,9 +96,17 @@ nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 }
+a{
+	text-decoration: none;
+	color: black;
+}
 
 li:hover {
 	color: #B1663C;
+}
+li:hover a{
+	color: #B1663C;
+	cursor: pointer
 }
 #introduction {
 	display: flex;
@@ -130,7 +139,7 @@ li:hover {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	margin: 150px 0px 75px 0px;
+	margin: 150px 0px 40px 0px;
 	gap: 20px;
 }
 .portfolio__title__modify{
@@ -154,7 +163,7 @@ li:hover {
 
 }
 .js-hidden{
-	display: none;
+	display: none !important;
 }
 
 /* Filter Elements */
@@ -187,32 +196,39 @@ li:hover {
 	background-color: #1D6154;
 	color: white;
 }
-#contact {
+
+/* Forms - Contact & Login */
+#contact, 
+#login{
 	width: 50%;
 	margin: auto;
 }
 
-#contact.login{
+#contact, 
+#login{
 	width:35%
 }
-#contact > * {
+#contact > *,
+#login > * {
 	text-align: center;
 
 }
 #contact h2{
 	margin-bottom: 20px;
 }
-#contact.login h2{
+#login h2{
     margin: 150px 0px 0px 0px;
 }
-#contact form {
+#contact form,
+#login form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input, 
+#contact input,
+#login input,
 .modifier__panel__edit__form input,
 .modifier__panel__edit__form SELECT{
 	box-sizing: border-box;
@@ -223,24 +239,34 @@ li:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#contact.login .button{
+#login .button{
 	height: 35px;
 	font-size: 1.0em;
 }
+
 #contact label,
+#login label,
 .modifier__panel__edit__form label {
 	margin: 2em 0 1em 0;
 }
-#contact textarea {
+#contact textarea,
+#login textarea{
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#contact a{
+#contact a,
+#login a{
 	text-decoration: underline;
 	color: black;
 	align-self: center;
 	margin-bottom: 240px;
+}
+
+#login #passwordError{
+    margin-top: 20px;
+	align-self: center;
+    color: rgb(209, 23, 23);
 }
 
 

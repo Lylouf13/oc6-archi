@@ -1,9 +1,6 @@
 const loginForm = document.querySelector('.login')
 
-if(sessionStorage.getItem("userToken")===null){
-    sessionStorage.setItem("token", null)
-}
-
+// Create eventlistener on form's Button and assemble body to use in fetch
 loginForm.addEventListener("submit", e=>{
     e.preventDefault();
     const userLogin = {
@@ -12,22 +9,22 @@ loginForm.addEventListener("submit", e=>{
     }
     const bodyLoaded = JSON.stringify(userLogin)
     
+    // api request for login using body previously assembled
     fetch('http://localhost:5678/api/users/login', {
         method: "POST",
         headers: { "Content-Type":"application/json" },
         body: bodyLoaded
     }).then(r=>{
+        //check request answer and either activate error message or redirect to index with logged state
         if(r.status!==200){
-            alert("Erreur dans l’identifiant ou le mot de passe")
+            loginForm.querySelector("[id=passwordError]").classList.remove("js-hidden")
         }
         else if(r.status===200){
-            console.log("c'est good")
             return r.json()
             .then(r=> {
                 console.log(r)
                 sessionStorage.setItem("logged", true)
                 sessionStorage.setItem("userToken", r.token)
-                token = r.token
                 location.href="index.html"
             })
         }

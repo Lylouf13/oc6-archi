@@ -1,9 +1,8 @@
+//#region Buttons Creation
 const galleryContainer = document.querySelector(".gallery")
 const galleryElements = []
 const galleryButtonsContainer = document.querySelector(".galleryFilter")
 const galleryButtons = []
-const modifierSection = document.querySelector(".modifier")
-const modifierElements = document.querySelector(".modifier__panel__content__elements")
 
 // Adds "ALL" button to buttons list
 galleryButtons.push(newButton = {
@@ -69,13 +68,11 @@ const galleryFetch = fetch('http://localhost:5678/api/categories')
                 })
             }
         })
+//#endregion
 
-// Parsing the works from the API to json
-async function fetchWorks () {
-    const r = await fetch('http://localhost:5678/api/works')
-    return r.json()
-}
-
+//#region Project Creation
+const modifierSection = document.querySelector(".modifier")
+const modifierElements = document.querySelector(".modifier__panel__content__elements")
 function addProject(title, categoryId, imageUrl , workId){
     // Creating project on gallery DOM
     let newWork = document.createElement("figure")
@@ -91,7 +88,7 @@ function addProject(title, categoryId, imageUrl , workId){
     galleryElements.push(
         newElement ={
             element : newWork,
-            categoryId : categoryId
+            categoryId : Number(categoryId)
         }
     )
 
@@ -124,20 +121,27 @@ function addProject(title, categoryId, imageUrl , workId){
     })
 }
 
-// Taking informations from json 
-fetchWorks().then(works =>{
-    console.log(works)
-    for (let i=0; i<works.length ; i++){
-        addProject(
-            works[i].title,
-            works[i].categoryId,
-            works[i].imageUrl,
-            works[i].id
-            )
-        }
-    }
-)
 
+// Gallery Initialization
+fetch('http://localhost:5678/api/works')
+    .then(r=>{
+        if(r.ok === true){
+            return r.json()
+        }
+    }) 
+        .then(works =>{
+            for (let i=0; i<works.length ; i++){
+                addProject(
+                    works[i].title,
+                    works[i].categoryId,
+                    works[i].imageUrl,
+                    works[i].id
+                    )
+                }
+        })
+//#endregion
+
+//#region Logged State Management
 // Logged state check + Modification of hidden / shown elements
 const logInButton = document.querySelector(".header__login")
 const logOutButton = document.querySelector(".header__logout")
@@ -148,22 +152,21 @@ logOutButton.addEventListener("click", e=>{
     e.target.classList.toggle("js-hidden")
     logInButton.classList.toggle('js-hidden')
     openModifierButton.classList.toggle('js-hidden')
+    galleryButtonsContainer.classList.toggle('js-hidden')
     sessionStorage.setItem("userToken", null)
     sessionStorage.setItem("logged", false)
 })
 
 // Shows elements only visible to logged users
-if (sessionStorage.getItem("logged")){
+if (sessionStorage.getItem("logged")==='true'){
     logInButton.classList.toggle('js-hidden')
     logOutButton.classList.toggle('js-hidden')
     openModifierButton.classList.toggle('js-hidden')
-
+    galleryButtonsContainer.classList.toggle('js-hidden')
 }
-else if (!sessionStorage.getItem("logged")){
-    console.log("non-logged")
-}
+//#endregion
 
-/// Modifier section
+//#region Modifier section
 const contentPanel = document.querySelector(".modifier__panel__content")
 const editPanel = document.querySelector(".modifier__panel__edit")
 const closeModifierButton = document.querySelector(".modifier__panel__content__close")
@@ -185,21 +188,18 @@ for(b of editPanelSwitch){
     })
 }
 
-// Update Submit Button
+// New Project Panel Elements
 const newProjectForm = document.querySelector(".modifier__panel__edit__form")
-
-// Elements
 const newProjectButton = newProjectForm.querySelector("[type=submit]")
 const newProjectImage = newProjectForm.querySelector("[name=image]")
 const newProjectImageContainer = document.querySelector(".modifier__panel__edit__form__imageContainer")
 const newProjectTitle = newProjectForm.querySelector("[name=title]")
 const newProjectCategory = newProjectForm.querySelector("[name=category]")
-
 const inputFieldImage = document.querySelector(".modifier__panel__edit__form__imageContainer__input")
 const inputFieldPreview = document.querySelector(".modifier__panel__edit__form__imageContainer__preview")
-// Modifiers Submit button depending on form status
-newProjectForm.addEventListener("change", e=>{
 
+// Modifies Submit button depending on form status
+newProjectForm.addEventListener("change", e=>{
     // Updates Missing Values status in the form
     if(newProjectImage.value!==''){
         newProjectImageContainer.classList.remove("fieldMissing")
@@ -225,17 +225,20 @@ newProjectForm.addEventListener("change", e=>{
         newProjectButton.classList.remove("nonFilled")
     }
 })
+
 // Edit Image preview
-newProjectImage.addEventListener("change", e=>{
+newProjectImage.addEventListener("change", ()=>{
     inputFieldImage.classList.toggle("-active")
     inputFieldPreview.classList.toggle("-active")
     inputFieldPreview.setAttribute("src", URL.createObjectURL(newProjectImage.files[0]))
 })
-inputFieldPreview.addEventListener("click", e=>{
+
+inputFieldPreview.addEventListener("click", ()=>{
     newProjectImage.value=""
     inputFieldImage.classList.toggle("-active")
     inputFieldPreview.classList.toggle("-active")
 })
+
 // Project creation - Push data to the server
 newProjectForm.addEventListener("submit", e=>{
     e.preventDefault()
@@ -269,10 +272,9 @@ newProjectForm.addEventListener("submit", e=>{
             modifierSection.classList.toggle('-active')
             contentPanel.classList.toggle('-active')
             editPanel.classList.toggle('-active')
-
             })
     }
-    // Shows Missing Values in the form to the user
+    // Shows the user missing values in the form 
     else{
         if(newProjectImage.value===''){
             newProjectImageContainer.classList.add("fieldMissing")
@@ -285,3 +287,4 @@ newProjectForm.addEventListener("submit", e=>{
         }
     }
 })
+//#endregion
