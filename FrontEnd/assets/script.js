@@ -235,6 +235,7 @@ newProjectImage.addEventListener("change", ()=>{
 
 inputFieldPreview.addEventListener("click", ()=>{
     newProjectImage.value=""
+    newProjectButton.classList.add("nonFilled")
     inputFieldImage.classList.toggle("-active")
     inputFieldPreview.classList.toggle("-active")
 })
@@ -267,6 +268,7 @@ newProjectForm.addEventListener("submit", e=>{
             newProjectImage.value=""
             newProjectTitle.value=""
             newProjectCategory.value="0"
+            newProjectButton.classList.add("nonFilled")
             inputFieldPreview.classList.toggle("-active")
             inputFieldImage.classList.toggle("-active")
             modifierSection.classList.toggle('-active')
