@@ -3,13 +3,13 @@ const galleryContainer = document.querySelector(".gallery")
 const galleryElements = []
 const galleryButtonsContainer = document.querySelector(".galleryFilter")
 const galleryButtons = []
+let galleryCategories = []
 
-// Adds "ALL" button to buttons list
+// Adds "ALL" button to buttons array
 galleryButtons.push(newButton = {
     element : document.querySelector(".galleryFilter__button"),
     categoryId : 0
     })
-let galleryCategories = []
 
 // Get Categories
 const galleryFetch = fetch('http://localhost:5678/api/categories')
@@ -21,7 +21,7 @@ const galleryFetch = fetch('http://localhost:5678/api/categories')
                 galleryCategories.add(category)
                     
             }
-            
+            const formList = document.getElementById('category')
             for(category of galleryCategories)
             {
                 let newCategoryButton = document.createElement("button")
@@ -36,13 +36,17 @@ const galleryFetch = fetch('http://localhost:5678/api/categories')
                         categoryId : category.id
                     }
                 )
+
+                let newListOption = document.createElement("option")
+                newListOption.setAttribute("value", category.id)
+                newListOption.innerHTML=category.name
+                formList.append(newListOption)
             }         
         })
-        // Addind eventListeners on buttons to filter
+        // Adding eventListeners on buttons to filter
         .then(()=>{
             for(button of galleryButtons){
                 let eventButton = button
-        
                 eventButton.element.addEventListener("click", () =>{
                     for(button of galleryButtons){
                     button.element.classList.remove("galleryFilter__button-js-selected")
@@ -146,6 +150,9 @@ fetch('http://localhost:5678/api/works')
 const logInButton = document.querySelector(".header__login")
 const logOutButton = document.querySelector(".header__logout")
 const openModifierButton = document.querySelector(".portfolio__title__modify")
+const editHeader = document.querySelector(".header__editMode")
+const headerTitle = document.querySelector(".header__title")
+
 
 // Changes login button to logout in nav
 logOutButton.addEventListener("click", e=>{
@@ -153,6 +160,8 @@ logOutButton.addEventListener("click", e=>{
     logInButton.classList.toggle('js-hidden')
     openModifierButton.classList.toggle('js-hidden')
     galleryButtonsContainer.classList.toggle('js-hidden')
+    editHeader.classList.toggle('js-hidden')
+    headerTitle.classList.toggle('logged')
     sessionStorage.setItem("userToken", null)
     sessionStorage.setItem("logged", false)
 })
@@ -163,6 +172,9 @@ if (sessionStorage.getItem("logged")==='true'){
     logOutButton.classList.toggle('js-hidden')
     openModifierButton.classList.toggle('js-hidden')
     galleryButtonsContainer.classList.toggle('js-hidden')
+    editHeader.classList.toggle('js-hidden')
+    headerTitle.classList.toggle('logged')
+
 }
 //#endregion
 
@@ -181,8 +193,8 @@ closeModifierButton.addEventListener("click", ()=>{
     modifierSection.classList.toggle('-active')
 })
 
-for(b of editPanelSwitch){
-    b.addEventListener("click", ()=>{
+for(button of editPanelSwitch){
+    button.addEventListener("click", ()=>{
         contentPanel.classList.toggle('-active')
         editPanel.classList.toggle('-active')
     })
@@ -240,7 +252,7 @@ inputFieldPreview.addEventListener("click", ()=>{
     inputFieldPreview.classList.toggle("-active")
 })
 
-// Project creation - Push data to the server
+// Project creation - API Request to create project
 newProjectForm.addEventListener("submit", e=>{
     e.preventDefault()
 
@@ -257,7 +269,6 @@ newProjectForm.addEventListener("submit", e=>{
             }
         }) 
         .then(r=>{
-            console.log(r)
             addProject(
                 r.title, 
                 r.categoryId, 

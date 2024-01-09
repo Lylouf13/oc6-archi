@@ -22,7 +22,6 @@ loginForm.addEventListener("submit", e=>{
         else if(r.status===200){
             return r.json()
             .then(r=> {
-                console.log(r)
                 sessionStorage.setItem("logged", true)
                 sessionStorage.setItem("userToken", r.token)
                 location.href="index.html"

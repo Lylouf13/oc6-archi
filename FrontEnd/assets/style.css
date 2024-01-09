@@ -54,10 +54,31 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
-header {
+
+header{
 	display: flex;
+	flex-direction: column;
+}
+.header__editMode{
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-top: 15px;
+    height: 50px;
+    color: white;
+    text-align: center;
+    background-color: black;
+}
+.header__title{
+	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
-	margin: 50px 0
+    margin: 50px 0;
+	gap: 20px;
+}
+.header__title.logged{
+	margin-top: 95px;
 }
 
 section {
@@ -323,6 +344,7 @@ li:hover a{
 	background-color: #80b1a8;
 	color: white;
 }
+
 /* Modifier Panel - Sections */
 /* Content overview */
 .modifier__panel__content{
@@ -356,7 +378,6 @@ li:hover a{
 
     border-bottom: solid;
     border-width: 1px;
-	
 }
 
 .modifier__panel__content__elements .iconContainer{

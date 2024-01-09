@@ -16,16 +16,19 @@
 </head>
 <body>
 	<header>
-		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-		<nav>
-			<ul>
-				<li>projets</li>
-				<li>contact</li>
-				<li class="header__login"><a href="login.html">login</a></li>
-				<li class="header__logout js-hidden"><a>logout</a></li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-			</ul>
-		</nav>
+		<p class="header__editMode js-hidden"><i class="fa-regular fa-pen-to-square"></i> Mode Edition</p>
+		<div class="header__title">
+			<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+			<nav>
+				<ul>
+					<li>projets</li>
+					<li>contact</li>
+					<li class="header__login"><a href="login.html">login</a></li>
+					<li class="header__logout js-hidden"><a>logout</a></li>
+					<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 	<main>
 		<section id="introduction">
@@ -82,13 +85,10 @@
 						<div class="modifier__panel__edit__form__dropdown">
 							<select id="category" name="category"> 
 								<option value=0></option>
-								<option value=1>Objets</option>
-								<option value=2>Appartements</option>
-								<option value=3>Hôtels et Restaurants</option>
 							</select>
 							<i class="fa-solid fa-chevron-down"></i>
 						</div>
-						<input class="modifier__panel__edit__form__button nonFilled" type="submit" value="Envoyer">
+						<input class="modifier__panel__edit__form__button nonFilled" type="submit" value="Valider">
 					</form>
 				</div>
 			</div>
